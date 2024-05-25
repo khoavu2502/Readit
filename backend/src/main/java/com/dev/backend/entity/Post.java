@@ -38,6 +38,10 @@ public class Post {
     @Size(max = 75, message = "{validation.name.size.too_long}")
     private String title;
 
+    @Column(name = "thumbnail")
+    @NotBlank(message = "thumbnail cannot be empty")
+    private String thumbnail;
+
     @NotBlank(message = "content cannot be empty")
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
