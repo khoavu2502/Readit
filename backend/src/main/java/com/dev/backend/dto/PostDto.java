@@ -26,5 +26,7 @@ public class PostDto {
 
     private UserDto user;
 
+    private List<CommentDto> comments;
+
     private List<CategoryDto> categories;
 }
