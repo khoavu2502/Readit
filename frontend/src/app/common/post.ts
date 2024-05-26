@@ -1,4 +1,5 @@
 import { Category } from "./category";
+import { Comment } from "./comment";
 import { User } from "./user";
 
 export class Post {
@@ -11,5 +12,6 @@ export class Post {
                 public updatedAt: Date,
                 public publishedAt: Date,
                 public user: User,
+                public comments: Comment[],
                 public categories: Category[]) {}
 }
