@@ -9,6 +9,8 @@ import { LandingPageComponent } from './components/landing-page/landing-page.com
 import { PostListComponent } from './components/post-list/post-list.component';
 import { HttpClientModule } from '@angular/common/http';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
+import { LoginComponent } from './components/login/login.component';
+import { RegistrationComponent } from './components/registration/registration.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +19,9 @@ import { PostDetailComponent } from './components/post-detail/post-detail.compon
     FooterComponent,
     LandingPageComponent,
     PostListComponent,
-    PostDetailComponent
+    PostDetailComponent,
+    LoginComponent,
+    RegistrationComponent
   ],
   imports: [
     BrowserModule,
