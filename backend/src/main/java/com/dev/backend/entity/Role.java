@@ -7,31 +7,39 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.ToString;
+import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 
 @Entity
 @Data
-@Table(name = "category")
-public class Category {
+@Table(name = "role")
+public class Role implements GrantedAuthority {
 
     @Id
-    @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
     private Long id;
 
-    @NotBlank(message = "category name cannot be empty")
-    @Size(max = 75, message = "{validation.name.size.too_long}")
     @Column(name = "name")
+    @NotBlank(message = "role name cannot be empty")
+    @Size(max = 25, message = "{validation.name.size.too_long}")
     private String name;
 
-    @ManyToMany(mappedBy = "categories", cascade = CascadeType.REMOVE)
-    private List<Post> posts;
+    @ManyToMany(mappedBy = "roles",
+                cascade = CascadeType.REMOVE,
+                fetch = FetchType.EAGER)
+    @ToString.Exclude
+    private List<User> users;
+
+    @Override
+    public String getAuthority() {
+        return name;
+    }
 }

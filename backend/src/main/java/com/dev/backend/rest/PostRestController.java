@@ -44,7 +44,7 @@ public class PostRestController {
     }
 
     // DELETE request at /api/v1/posts
-    @DeleteMapping("/posts")
+    @DeleteMapping("/posts/{id}")
     public void deletePost(@PathVariable Long id) {
         postService.deleteById(id);
     }

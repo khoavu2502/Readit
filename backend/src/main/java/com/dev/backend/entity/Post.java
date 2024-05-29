@@ -62,17 +62,16 @@ public class Post {
     private Date publishedAt;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
     @OneToMany(mappedBy = "post")
     private List<Comment> comments;
 
     @ManyToMany(fetch = FetchType.LAZY,
-                cascade = {CascadeType.DETACH, CascadeType.MERGE,
-                           CascadeType.PERSIST, CascadeType.REFRESH})
+                cascade = CascadeType.REMOVE)
     @JoinTable(name = "post_category",
-               joinColumns = @JoinColumn(name = "post_id"),
-               inverseJoinColumns = @JoinColumn(name = "category_id"))
+               joinColumns = @JoinColumn(name = "post_id", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "category_id", referencedColumnName = "id"))
     private List<Category> categories;
 }
