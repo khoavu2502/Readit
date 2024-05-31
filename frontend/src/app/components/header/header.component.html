@@ -1,6 +1,7 @@
 <header class="lg:px-44 py-3 shadow-sm flex flex-row items-center justify-between">
+    <div [ngClass]="{'block': isOpen, 'hidden': !isOpen}" class="fixed inset-0 bg-black bg-opacity-50 z-30" (click)="handleDropdown()"></div>
     <div class="flex flex-row space-x-3 items-center">    
-        <img src="/assets/images/logo.png" class="w-8"/>
+        <img src="/assets/images/logo.png" class="w-8 h-8"/>
         <span class="font-bold text-xl">Readit</span>
     </div>
     <div class="flex flex-row items-center space-x-2">
@@ -14,7 +15,53 @@
                 </div>
             </div>
         </form>
-        <a routerLink="/login" class="bg-black text-white rounded-md py-2 px-4 hover:bg-gray-400 text-sm">Login</a>
-        <a routerLink="/signup" class="bg-gray-50 font-bold rounded-md py-2 px-4 hover:bg-gray-400 border border-black text-sm">Sign Up</a>
+        <ng-template [ngIf]="currentUser == null">
+            <a routerLink="/login" class="bg-black text-white rounded-md py-2 px-4 hover:bg-gray-400 text-sm">Login</a>
+            <a routerLink="/signup" class="bg-gray-50 font-bold rounded-md py-2 px-4 hover:bg-gray-400 border border-black text-sm">Sign Up</a>
+        </ng-template>
+        <div *ngIf="currentUser != null" class="flex flex-row items-center space-x-2 cursor-pointer" (click)="handleDropdown()">
+            <img src="/assets/images/down.png" class="w-2 h-2"/>
+            <span class="font-medium text-sm">{{ currentUser.username }}</span>
+            <img src="{{ currentUser.avatar }}" class="w-8 h-8"/>
+        </div>
+    </div>
+
+    <div [ngClass]="{'translate-x-full': !isOpen, 'translate-x-0': isOpen}" class="fixed top-0 right-0 z-40 h-screen w-1/5 bg-gray-100 flex flex-col px-4 py-2 transition-transform duration-1000 ease-in-out">
+        <div class="flex flex-row items-center justify-between mb-8">
+            <div class="flex flex-row items-center space-x-2">
+                <img src="/assets/images/logo.png" class="w-8 h-8" />
+                <span class="text-base font-medium">Readit</span>
+            </div>
+            <img src="/assets/images/close_icon.png" (click)="handleDropdown()" class="w-6 h-6 cursor-pointer"/>
+        </div>
+        <span class="text-sm font-bold mb-6">MY STUFF</span>
+        <a href="#" class="flex flex-row items-center space-x-2 mb-6 hover:font-bold">
+            <img src="/assets/images/home.png" class="w-4 h-4"/>
+            <span class="text-sm">Home</span>
+        </a>
+        <a href="#" class="flex flex-row items-center space-x-2 mb-6 hover:font-bold">
+            <img src="/assets/images/blog.png" class="w-4 h-4" />
+            <span class="text-sm">Blog</span>
+        </a>
+        <a href="#" class="flex flex-row items-center space-x-2 mb-6 hover:font-bold">
+            <img src="/assets/images/account.png" class="w-4 h-4"/>
+            <span class="text-sm">My Account</span>
+        </a>
+        <span class="text-sm font-bold mb-6">MORE STUFF</span>
+        <label class="inline-flex items-center cursor-pointer mb-6">
+            <img src="/assets/images/light_mode.png" class="w-4 h-4 mr-2"/>
+            <span class="me-2 text-sm">Light</span>
+            <input type="checkbox" value="" class="sr-only peer">
+            <div class="relative w-11 h-6 bg-gray-200 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-blue-300 dark:peer-focus:ring-blue-800 rounded-full peer dark:bg-gray-700 peer-checked:after:translate-x-full rtl:peer-checked:after:-translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:start-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all dark:border-gray-600 peer-checked:bg-blue-600"></div>
+        </label>
+        <a href="https://github.com/khoavu2502/Readit" class="flex flex-row items-center space-x-2 mb-4 hover:font-bold">
+            <img src="/assets/images/code.png" class="w-4 h-4" />
+            <span class="text-sm">Source code</span>
+        </a>
+        <hr class="border border-gray-300 mb-6">
+        <div (click)="logout()" class="flex flex-row items-center space-x-2 hover:font-bold cursor-pointer">
+            <img src="/assets/images/logout.png" class="w-8 h-8"/>
+            <span class="text-gray-900 text-base">Logout</span>
+        </div>
     </div>
 </header>

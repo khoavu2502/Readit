@@ -7,11 +7,12 @@ import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
 import { LandingPageComponent } from './components/landing-page/landing-page.component';
 import { PostListComponent } from './components/post-list/post-list.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, provideHttpClient, withInterceptors } from '@angular/common/http';
 import { PostDetailComponent } from './components/post-detail/post-detail.component';
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ReactiveFormsModule } from '@angular/forms';
+import { authInterceptor } from './interceptors/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,9 @@ import { ReactiveFormsModule } from '@angular/forms';
     HttpClientModule,
     ReactiveFormsModule
   ],
-  providers: [],
+  providers: [
+    provideHttpClient(withInterceptors([authInterceptor]))
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

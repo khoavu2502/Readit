@@ -1,7 +1,6 @@
 package com.dev.backend.configuration;
 
-import com.dev.backend.entity.User;
-import com.dev.backend.repository.UserRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
@@ -13,27 +12,20 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 @Configuration
 @EnableWebSecurity
+@RequiredArgsConstructor
 public class SecurityConfiguration {
+
+    private final JwtAuthenticationFilter jwtAuthenticationFilter;
 
     @Bean
     public BCryptPasswordEncoder bCryptPasswordEncoder() {
         return new BCryptPasswordEncoder();
-    }
-
-    @Bean
-    public UserDetailsService userDetailsService(UserRepository userRepository) {
-        return username -> {
-            User user = userRepository.findByUsername(username);
-            if (user != null) return user;
-
-            throw new UsernameNotFoundException("User '" + username + "' not found");
-        };
     }
 
     @Bean
@@ -55,7 +47,9 @@ public class SecurityConfiguration {
            request.requestMatchers(HttpMethod.DELETE, "/api/v1/**").hasAuthority("ADMIN");
            request.requestMatchers(HttpMethod.POST, "/api/v1/**").hasAnyAuthority("USER", "ADMIN");
            request.anyRequest().authenticated();
-        }).httpBasic(Customizer.withDefaults());
+        })
+          .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
+          .httpBasic(Customizer.withDefaults());
 
         return http.build();
     }

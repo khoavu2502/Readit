@@ -22,11 +22,6 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
 
     @Override
-    public UserDto save(User user) {
-        return modelMapper.map(userRepository.save(user), UserDto.class);
-    }
-
-    @Override
     public Optional<UserDto> findById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
         if (optionalUser.isPresent()) {

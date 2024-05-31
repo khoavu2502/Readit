@@ -25,8 +25,7 @@ export class LoginComponent implements OnInit {
 
   onSubmit() {
     const userData = this.loginFormGroup.get('user')?.value;
-    this.securityService.performLogin(userData).subscribe(response => {
-      console.log(response);
-    });
+
+    this.securityService.loginAndSetCurrentUser(userData);
   }
 }
