@@ -13,6 +13,8 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './interceptors/auth.interceptor';
+import { loaderInterceptor } from './interceptors/loader.interceptor';
+import { LoaderComponent } from './components/loader/loader.component';
 
 @NgModule({
   declarations: [
@@ -23,7 +25,8 @@ import { authInterceptor } from './interceptors/auth.interceptor';
     PostListComponent,
     PostDetailComponent,
     LoginComponent,
-    RegistrationComponent
+    RegistrationComponent,
+    LoaderComponent
   ],
   imports: [
     BrowserModule,
@@ -32,7 +35,7 @@ import { authInterceptor } from './interceptors/auth.interceptor';
     ReactiveFormsModule
   ],
   providers: [
-    provideHttpClient(withInterceptors([authInterceptor]))
+    provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor]))
   ],
   bootstrap: [AppComponent]
 })
