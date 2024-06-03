@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
@@ -21,7 +22,6 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     @Override
-    @Transactional
     public PostDto save(Post post) {
         return modelMapper.map(postRepository.save(post), PostDto.class);
     }
@@ -38,6 +38,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> findAll() {
+
         List<Post> posts = postRepository.findAll();
         return posts.stream()
                 .map(post -> modelMapper.map(post, PostDto.class))
@@ -45,7 +46,6 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         Optional<Post> post = postRepository.findById(id);
         if (post.isPresent()) {

@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class CommentServiceImpl implements CommentService {
 
@@ -21,7 +22,6 @@ public class CommentServiceImpl implements CommentService {
     private final CommentRepository commentRepository;
 
     @Override
-    @Transactional
     public CommentDto save(Comment comment) {
         return modelMapper.map(commentRepository.save(comment), CommentDto.class);
     }
@@ -45,7 +45,6 @@ public class CommentServiceImpl implements CommentService {
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         Optional<Comment> comment = commentRepository.findById(id);
         if (comment.isPresent()) {

@@ -32,11 +32,6 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-                cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-                           CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(name = "post_category",
-               joinColumns = @JoinColumn(name = "category_id"),
-               inverseJoinColumns = @JoinColumn(name = "post_id"))
+    @ManyToMany(mappedBy = "categories", cascade = CascadeType.REMOVE)
     private List<Post> posts;
 }

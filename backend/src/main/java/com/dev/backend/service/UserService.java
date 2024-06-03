@@ -8,8 +8,6 @@ import java.util.Optional;
 
 public interface UserService {
 
-    UserDto save(User user);
-
     Optional<UserDto> findById(Long id);
 
     List<UserDto> findAll();

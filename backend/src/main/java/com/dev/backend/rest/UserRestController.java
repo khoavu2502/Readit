@@ -25,12 +25,6 @@ public class UserRestController {
 
     private final UserService userService;
 
-    // POST request at /api/v1/users
-    @PostMapping("/users")
-    public UserDto addUser(@Valid @RequestBody User user) {
-        return userService.save(user);
-    }
-
     // GET request at /api/v1/users/:id
     @GetMapping("/users/{id}")
     public Optional<UserDto> getUser(@PathVariable Long id) {

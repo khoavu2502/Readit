@@ -14,17 +14,12 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class UserServiceImpl implements UserService {
 
     private final ModelMapper modelMapper;
     private final UserRepository userRepository;
-
-    @Transactional
-    @Override
-    public UserDto save(User user) {
-        return modelMapper.map(userRepository.save(user), UserDto.class);
-    }
 
     @Override
     public Optional<UserDto> findById(Long id) {
@@ -44,7 +39,6 @@ public class UserServiceImpl implements UserService {
                 .toList();
     }
 
-    @Transactional
     @Override
     public void deleteById(Long id) {
         Optional<User> optionalUser = userRepository.findById(id);
