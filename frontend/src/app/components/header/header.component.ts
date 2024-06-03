@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { User } from '../../common/user';
 import { UserService } from '../../services/user.service';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -12,7 +13,8 @@ export class HeaderComponent implements OnInit {
   currentUser: User | null = null;
   isOpen: boolean = false;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService,
+              private toastService: ToastrService) { }
 
   ngOnInit(): void {
     this.userService.currentUser$.subscribe(response => {
@@ -27,5 +29,10 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.isOpen = false;
     this.userService.clearCurrentUser();
+    this.showSuccess();
+  }
+
+  showSuccess() {
+    this.toastService.info('You have succesfully logout');
   }
 }

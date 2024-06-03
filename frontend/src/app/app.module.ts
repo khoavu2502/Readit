@@ -15,6 +15,8 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { authInterceptor } from './interceptors/auth.interceptor';
 import { loaderInterceptor } from './interceptors/loader.interceptor';
 import { LoaderComponent } from './components/loader/loader.component';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ToastrModule } from 'ngx-toastr';
 
 @NgModule({
   declarations: [
@@ -26,13 +28,22 @@ import { LoaderComponent } from './components/loader/loader.component';
     PostDetailComponent,
     LoginComponent,
     RegistrationComponent,
-    LoaderComponent
+    LoaderComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    BrowserAnimationsModule,
+    ToastrModule.forRoot({
+      timeOut: 3000,
+      positionClass: 'toast-top-left',
+      preventDuplicates: true,
+      easing: 'ease-in',
+      easeTime: 300,
+
+    }),
   ],
   providers: [
     provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor]))

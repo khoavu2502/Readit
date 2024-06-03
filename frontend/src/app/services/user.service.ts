@@ -33,6 +33,5 @@ export class UserService {
     localStorage.removeItem('jwtToken');
     localStorage.removeItem('currentUser');
     this.currentUserSubject.next(null);
-    this.route.navigate(['/']);
   }
 }

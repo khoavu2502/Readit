@@ -22,7 +22,7 @@
         <div *ngIf="currentUser != null" class="flex flex-row items-center space-x-2 cursor-pointer" (click)="handleDropdown()">
             <img src="/assets/images/down.png" class="w-2 h-2"/>
             <span class="font-medium text-sm">{{ currentUser.username }}</span>
-            <img src="{{ currentUser.avatar }}" class="w-8 h-8"/>
+            <img src="{{ currentUser.avatar }}" class="w-8 h-8 rounded-full"/>
         </div>
     </div>
 

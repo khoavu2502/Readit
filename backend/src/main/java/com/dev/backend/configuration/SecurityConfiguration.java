@@ -43,7 +43,7 @@ public class SecurityConfiguration {
 
         http.authorizeHttpRequests(request -> {
            request.requestMatchers(HttpMethod.GET, "/api/v1/posts", "/api/v1/posts/*").permitAll();
-           request.requestMatchers(HttpMethod.POST, "/api/v1/login", "/api/v1/registration").permitAll();
+           request.requestMatchers(HttpMethod.POST, "/api/v1/login", "/api/v1/register", "/error").permitAll();
            request.requestMatchers(HttpMethod.DELETE, "/api/v1/**").hasAuthority("ADMIN");
            request.requestMatchers(HttpMethod.POST, "/api/v1/**").hasAnyAuthority("USER", "ADMIN");
            request.anyRequest().authenticated();

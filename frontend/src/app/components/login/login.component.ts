@@ -10,6 +10,7 @@ import { SecurityService } from '../../services/security.service';
 export class LoginComponent implements OnInit {
 
   loginFormGroup!: FormGroup;
+  hasLoginError: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
               private securityService: SecurityService) { }
@@ -20,6 +21,10 @@ export class LoginComponent implements OnInit {
         username: [''],
         password: ['']
       })
+    })
+
+    this.securityService.isError$.subscribe(state => {
+      this.hasLoginError = state;
     })
   }
 

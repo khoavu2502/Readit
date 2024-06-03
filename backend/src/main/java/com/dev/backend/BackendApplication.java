@@ -1,6 +1,5 @@
 package com.dev.backend;
 
-import com.dev.backend.entity.User;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

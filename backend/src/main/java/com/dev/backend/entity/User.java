@@ -1,5 +1,6 @@
 package com.dev.backend.entity;
 
+import com.dev.backend.validator.unique.Unique;
 import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -12,14 +13,17 @@ import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
 import lombok.ToString;
+import org.hibernate.annotations.CreationTimestamp;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -33,18 +37,24 @@ public class User implements UserDetails {
     private Long id;
 
     @NotBlank(message = "username cannot be empty")
-    @Size(min = 10, max = 25, message = "username must be between {MIN} and {MAX} characters")
-    @Column(name = "username")
+    @Unique(fieldName = "username", message = "username already exists")
+    @Size(min = 10, max = 25, message = "username must be between {min} and {max} characters")
+    @Column(name = "username", unique = true)
     private String username;
 
-    @NotBlank(message = "password cannot be empty")
-    @Size(min = 10, max = 30, message = "password must be between {MIN} and {MAX} characters")
     @Column(name = "password")
     private String password;
 
-    @Size(max = 50, message = "{validation.name.size.too_long}")
-    @Column(name = "email")
+    @NotBlank(message = "email cannot be empty")
+    @Unique(fieldName = "email", message = "email already exists")
+    @Email
+    @Size(min = 10, max = 30, message = "email must be between {min} and {max} characters")
+    @Column(name = "email", unique = true)
     private String email;
+
+    @CreationTimestamp
+    @Column(name = "created_at")
+    private Date createdAt;
 
     @Column(name = "avatar")
     private String avatar;
