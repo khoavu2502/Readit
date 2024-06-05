@@ -1,5 +1,6 @@
 package com.dev.backend.service;
 
+import com.dev.backend.dto.PostDto;
 import com.dev.backend.dto.UserDto;
 
 import java.util.List;
@@ -16,4 +17,6 @@ public interface UserService {
     List<UserDto> followUser(Long followerId, Long followingId);
 
     List<UserDto> unFollowUser(Long followerId, Long followingId);
+
+    List<PostDto> findPostById(Long id);
 }

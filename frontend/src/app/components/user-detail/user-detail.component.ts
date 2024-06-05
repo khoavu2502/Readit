@@ -3,6 +3,7 @@ import { User } from '../../common/user';
 import { UserService } from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom, forkJoin, throwError } from 'rxjs';
+import { Post } from '../../common/post';
 
 @Component({
   selector: 'app-user-detail',
@@ -13,12 +14,15 @@ export class UserDetailComponent implements OnInit {
   user!: User| null;
   currentLoggedIn!: User | null;
   isFollowing!: boolean;
+  posts!: Post[];
 
   constructor(private userService: UserService,
               private route: ActivatedRoute) { }
 
   ngOnInit(): void {
-    this.loadData();
+    this.route.paramMap.subscribe(() => {
+      this.loadData();
+    })
   }
 
   async loadData() {
@@ -31,6 +35,9 @@ export class UserDetailComponent implements OnInit {
 
       // set following status
       this.checkIfFollowing();
+
+      // load user's posts
+      if (this.user) this.loadPosts(this.user.id);
     } catch (err) {
       console.log(err);
     }
@@ -50,6 +57,13 @@ export class UserDetailComponent implements OnInit {
     }
   }
 
+  loadPosts(userId: number) {
+    this.userService.loadPosts(userId).subscribe(posts => {
+      this.posts = posts;
+      console.log(this.posts);
+    })
+  }
+
   interact() {
     if (this.isFollowing) {
       this.isFollowing = false;
@@ -62,7 +76,6 @@ export class UserDetailComponent implements OnInit {
         this.updateUsers(response);
       });
     }
-
 
   }
 

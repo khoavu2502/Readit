@@ -1,5 +1,6 @@
 package com.dev.backend.rest;
 
+import com.dev.backend.dto.PostDto;
 import com.dev.backend.dto.UserDto;
 import com.dev.backend.service.UserService;
 import lombok.RequiredArgsConstructor;
@@ -49,6 +50,12 @@ public class UserRestController {
                                            @PathVariable Long followingId) {
         List<UserDto> response =  userService.unFollowUser(followerId, followingId);
         return ResponseEntity.ok(response);
+    }
+
+    // GET request at /api/v1/users/:id/posts
+    @GetMapping("/users/{id}/posts")
+    public List<PostDto> getPosts(@PathVariable Long id) {
+        return userService.findPostById(id);
     }
 
     // DELETE request at /api/v1/users/:id

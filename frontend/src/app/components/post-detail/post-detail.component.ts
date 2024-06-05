@@ -2,9 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { PostService } from '../../services/post.service';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from '../../common/post';
-import { User } from '../../common/user';
-import { Category } from '../../common/category';
-import { Comment } from '../../common/comment';
 
 @Component({
   selector: 'app-post-detail',

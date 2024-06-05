@@ -1,6 +1,8 @@
 package com.dev.backend.service.Impl;
 
+import com.dev.backend.dto.PostDto;
 import com.dev.backend.dto.UserDto;
+import com.dev.backend.entity.Post;
 import com.dev.backend.entity.User;
 import com.dev.backend.exception.ResourceNotFoundException;
 import com.dev.backend.repository.UserRepository;
@@ -86,5 +88,18 @@ public class UserServiceImpl implements UserService {
             response.add(modelMapper.map(userRepository.save(following), UserDto.class));
         }
         return response;
+    }
+
+    @Override
+    public List<PostDto> findPostById(Long id) {
+        Optional<User> optionalUser = userRepository.findById(id);
+        if (optionalUser.isPresent()) {
+            List<Post> posts = optionalUser.get().getPosts();
+            return posts.stream()
+                        .map(post -> modelMapper.map(post, PostDto.class))
+                        .toList();
+        } else {
+            throw new ResourceNotFoundException("Cannot find user with id: " + id);
+        }
     }
 }

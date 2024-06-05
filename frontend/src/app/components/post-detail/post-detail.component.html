@@ -30,7 +30,9 @@
             <img src="{{ post.user.avatar }}" class="w-12 h-12 rounded-md"/>
             <div class="grid grid-cols-1 content-between">
                 <span class="text-sm text-gray-700">Posted on {{ post.createdAt | date: 'MMM, yyyy' }} by:</span>
-                <span class="font-bold">{{ post.user.username }}</span>
+                <a routerLink="/users/{{post.user.id}}">
+                    <span class="font-bold hover:underline">{{ post.user.username }}</span>
+                </a>
             </div>
         </div>
     </div>

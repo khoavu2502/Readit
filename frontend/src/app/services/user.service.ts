@@ -3,6 +3,7 @@ import { User } from '../common/user';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { Post } from '../common/post';
 
 @Injectable({
   providedIn: 'root'
@@ -48,5 +49,9 @@ export class UserService {
 
   unFollow(followerId: any, followingId: any): Observable<any> {
     return this.httpClient.post<any>(`${this.baseUrl}/${followerId}/unfollow/${followingId}`, null, {headers: {skip: 'true'}});
+  }
+
+  loadPosts(userId: number): Observable<Post[]> {
+    return this.httpClient.get<Post[]>(`${this.baseUrl}/${userId}/posts`);
   }
 }
