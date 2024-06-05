@@ -1,0 +1,29 @@
+<section class="lg:px-44 pt-10 grid grid-cols-3 items-start h-96 pb-24">
+    <div class="flex flex-row col-span-1 items-center space-x-4">
+        <img src="{{ user?.avatar }}" class="w-16 h-16" />
+        <span class="font-semibold text-xl">{{ user?.username }}</span>
+    </div>
+    <div class="flex flex-col col-span-1 space-y-2">
+        <div class="flex flex-row items-center space-x-4" >
+            <a href="#" class="text-sm font-bold border border-black px-4 py-2 rounded-md">
+                Message
+            </a>
+            <button [ngClass]="isFollowing? 'bg-emerald-600 text-white' : ' bg-gray-200 text-black'"
+                    class="px-4 py-2 font-medium text-sm rounded-md"
+                    (click)="interact()">
+                {{ isFollowing? 'Following' : 'Follow' }}
+            </button>
+        </div>
+        <div class="flex flex-row items-center justify-between w-3/4 font-medium">
+            <p class="text-gray-500 text-sm">
+                <span class="text-gray-700 text-base">{{ user?.posts?.length }}</span> post
+            </p>
+            <p class="text-gray-500 text-sm">
+                <span class="text-gray-700 text-base">{{ user?.followers?.length }}</span> follower
+            </p>
+            <p class="text-gray-500 text-sm">
+                <span class="text-gray-700 text-base">{{ user?.following?.length }}</span> following
+            </p>
+        </div>
+    </div>
+</section>

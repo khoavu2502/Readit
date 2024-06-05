@@ -35,15 +35,15 @@
             <img src="/assets/images/close_icon.png" (click)="handleDropdown()" class="w-6 h-6 cursor-pointer"/>
         </div>
         <span class="text-sm font-bold mb-6">MY STUFF</span>
-        <a href="#" class="flex flex-row items-center space-x-2 mb-6 hover:font-bold">
+        <a routerLink="/" (click)="handleDropdown()" class="flex flex-row items-center space-x-2 mb-6 hover:font-bold">
             <img src="/assets/images/home.png" class="w-4 h-4"/>
             <span class="text-sm">Home</span>
         </a>
-        <a href="#" class="flex flex-row items-center space-x-2 mb-6 hover:font-bold">
+        <a routerLink="/posts" (click)="handleDropdown()" class="flex flex-row items-center space-x-2 mb-6 hover:font-bold">
             <img src="/assets/images/blog.png" class="w-4 h-4" />
             <span class="text-sm">Blog</span>
         </a>
-        <a href="#" class="flex flex-row items-center space-x-2 mb-6 hover:font-bold">
+        <a routerLink="/users/{{currentUser?.id}}" (click)="handleDropdown()" class="flex flex-row items-center space-x-2 mb-6 hover:font-bold">
             <img src="/assets/images/account.png" class="w-4 h-4"/>
             <span class="text-sm">My Account</span>
         </a>

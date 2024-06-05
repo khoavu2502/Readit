@@ -2,6 +2,9 @@ package com.dev.backend.dto;
 
 import com.dev.backend.validator.password.PasswordMatches;
 import com.dev.backend.validator.unique.Unique;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.JsonIdentityReference;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
@@ -11,6 +14,8 @@ import java.util.Date;
 import java.util.List;
 
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+        property = "id")
 @PasswordMatches
 public class UserDto {
 
@@ -37,6 +42,14 @@ public class UserDto {
     private Date createdAt;
 
     private String avatar;
+
+    @JsonIdentityReference(alwaysAsId = true)
+    private List<UserDto> followers;
+
+    @JsonIdentityReference(alwaysAsId = true)
+    private List<UserDto> following;
+
+    private List<PostDto> posts;
 
     private List<RoleDto> roles;
 }

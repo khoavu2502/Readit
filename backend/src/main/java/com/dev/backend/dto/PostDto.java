@@ -1,11 +1,15 @@
 package com.dev.backend.dto;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 
 import java.util.Date;
 import java.util.List;
 
 @Data
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+                  property = "id")
 public class PostDto {
 
     private Long id;

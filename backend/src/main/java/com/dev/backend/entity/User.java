@@ -78,6 +78,16 @@ public class User implements UserDetails {
                inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     private List<Role> roles;
 
+    @ManyToMany(cascade = CascadeType.REMOVE,
+                fetch = FetchType.EAGER)
+    @JoinTable(name = "user_follow",
+               joinColumns = @JoinColumn(name = "following", referencedColumnName = "id"),
+               inverseJoinColumns = @JoinColumn(name = "follower", referencedColumnName = "id"))
+    private List<User> followers;
+
+    @ManyToMany(mappedBy = "followers")
+    private List<User> following;
+
     // UserDetails methods
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
