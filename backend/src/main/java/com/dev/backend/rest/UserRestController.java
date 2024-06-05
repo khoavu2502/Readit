@@ -1,16 +1,14 @@
 package com.dev.backend.rest;
 
 import com.dev.backend.dto.UserDto;
-import com.dev.backend.entity.User;
 import com.dev.backend.service.UserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -35,6 +33,22 @@ public class UserRestController {
     @GetMapping("/users")
     public List<UserDto> getUsers() {
         return userService.findAll();
+    }
+
+    // POST request at /api/v1/users/:followerId/follow/:followingId
+    @PostMapping("/users/{followerId}/follow/{followingId}")
+    public ResponseEntity<?> follow(@PathVariable Long followerId,
+                                         @PathVariable Long followingId) {
+        List<UserDto> response = userService.followUser(followerId, followingId);
+        return ResponseEntity.ok(response);
+    }
+
+    // POST request at /api/v1/users/:followerId/follow/:followingId
+    @PostMapping("/users/{followerId}/unfollow/{followingId}")
+    public ResponseEntity<?> unFollow(@PathVariable Long followerId,
+                                           @PathVariable Long followingId) {
+        List<UserDto> response =  userService.unFollowUser(followerId, followingId);
+        return ResponseEntity.ok(response);
     }
 
     // DELETE request at /api/v1/users/:id

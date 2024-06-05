@@ -11,6 +11,7 @@ export class LoginComponent implements OnInit {
 
   loginFormGroup!: FormGroup;
   hasLoginError: boolean = false;
+  isVisible: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
               private securityService: SecurityService) { }
@@ -32,5 +33,9 @@ export class LoginComponent implements OnInit {
     const userData = this.loginFormGroup.get('user')?.value;
 
     this.securityService.loginAndSetCurrentUser(userData);
+  }
+
+  handleVisibility() {
+    this.isVisible = !this.isVisible;
   }
 }

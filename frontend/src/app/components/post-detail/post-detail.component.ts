@@ -12,7 +12,6 @@ import { User } from '../../common/user';
 export class PostDetailComponent implements OnInit {
 
   post!: Post;
-  currentUser!: User;
 
   constructor(private postService: PostService,
               private route: ActivatedRoute) { }
@@ -28,6 +27,7 @@ export class PostDetailComponent implements OnInit {
   
     this.postService.getPost(postId).subscribe(response => {
       this.post = response;
+      console.log(this.post);
     });
   }
 }

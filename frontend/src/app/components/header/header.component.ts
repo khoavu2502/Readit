@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { User } from '../../common/user';
 import { UserService } from '../../services/user.service';
 import { ToastrService } from 'ngx-toastr';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -14,7 +15,8 @@ export class HeaderComponent implements OnInit {
   isOpen: boolean = false;
 
   constructor(private userService: UserService,
-              private toastService: ToastrService) { }
+              private toastService: ToastrService,
+              private route: Router) { }
 
   ngOnInit(): void {
     this.userService.currentUser$.subscribe(response => {
@@ -30,6 +32,7 @@ export class HeaderComponent implements OnInit {
     this.isOpen = false;
     this.userService.clearCurrentUser();
     this.showSuccess();
+    this.route.navigate(['/posts']);
   }
 
   showSuccess() {

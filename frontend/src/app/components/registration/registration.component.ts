@@ -13,6 +13,7 @@ import { ToastrService } from 'ngx-toastr';
 export class RegistrationComponent implements OnInit {
 
   registrationFormGroup!: FormGroup;
+  isVisible: boolean = false;
 
   constructor(private formBuilder: FormBuilder,
               private securityService: SecurityService,
@@ -62,5 +63,9 @@ export class RegistrationComponent implements OnInit {
 
   showSuccess() {
     this.toastr.success('You have succesfully sign up');
+  }
+
+  handleVisibility() {
+    this.isVisible = !this.isVisible;
   }
 }
