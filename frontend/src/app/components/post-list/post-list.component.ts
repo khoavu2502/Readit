@@ -10,7 +10,7 @@ import { PostService } from '../../services/post.service';
 })
 export class PostListComponent implements OnInit {
 
-  posts: Post[] = [];
+  posts!: Post[];
 
   constructor(private postService: PostService,
               private route: ActivatedRoute) {}

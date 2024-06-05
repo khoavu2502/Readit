@@ -3,6 +3,8 @@ import { PostService } from '../../services/post.service';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from '../../common/post';
 import { User } from '../../common/user';
+import { Category } from '../../common/category';
+import { Comment } from '../../common/comment';
 
 @Component({
   selector: 'app-post-detail',
@@ -27,7 +29,6 @@ export class PostDetailComponent implements OnInit {
   
     this.postService.getPost(postId).subscribe(response => {
       this.post = response;
-      console.log(this.post);
     });
   }
 }
