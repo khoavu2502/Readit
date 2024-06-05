@@ -14,8 +14,6 @@ import java.util.Date;
 import java.util.List;
 
 @Data
-@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
-        property = "id")
 @PasswordMatches
 public class UserDto {
 
@@ -43,13 +41,13 @@ public class UserDto {
 
     private String avatar;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private List<UserDto> followers;
 
+    @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,
+            property = "id")
     @JsonIdentityReference(alwaysAsId = true)
     private List<UserDto> following;
-
-    private List<PostDto> posts;
-
-    private List<RoleDto> roles;
 }
