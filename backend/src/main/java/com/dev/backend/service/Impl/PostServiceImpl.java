@@ -1,13 +1,7 @@
 package com.dev.backend.service.Impl;
 
-import com.dev.backend.dto.CategoryDto;
-import com.dev.backend.dto.CommentDto;
 import com.dev.backend.dto.PostDto;
-import com.dev.backend.dto.UserDto;
-import com.dev.backend.entity.Category;
-import com.dev.backend.entity.Comment;
 import com.dev.backend.entity.Post;
-import com.dev.backend.entity.User;
 import com.dev.backend.exception.ResourceNotFoundException;
 import com.dev.backend.repository.PostRepository;
 import com.dev.backend.service.PostService;
