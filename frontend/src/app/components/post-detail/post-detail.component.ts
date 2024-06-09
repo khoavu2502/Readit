@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewEncapsulation, ɵ_sanitizeHtml } from '@angular/core';
 import { PostService } from '../../services/post.service';
 import { ActivatedRoute } from '@angular/router';
 import { Post } from '../../common/post';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-post-detail',
@@ -11,9 +12,11 @@ import { Post } from '../../common/post';
 export class PostDetailComponent implements OnInit {
 
   post!: Post;
+  cleanContent!: SafeHtml;
 
   constructor(private postService: PostService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
@@ -26,6 +29,7 @@ export class PostDetailComponent implements OnInit {
   
     this.postService.getPost(postId).subscribe(response => {
       this.post = response;
+      this.cleanContent = this.sanitizer.bypassSecurityTrustHtml(this.post.content);
     });
   }
 }

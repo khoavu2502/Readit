@@ -8,7 +8,7 @@ import java.util.Optional;
 
 public interface PostService {
 
-    PostDto save(Post post);
+    PostDto save(PostDto postDto);
 
     Optional<PostDto> findById(Long id);
 

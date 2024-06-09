@@ -1,10 +1,14 @@
 /* You can add global styles to this file, and also import other style files */
-@import 'ngx-toastr/toastr';
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
 @layer base {
+  .no-tailwindcss-base {
+    p {
+      background-color: revert;
+    }
+  }
     @font-face {
         font-family: 'Dancing';
         font-style: normal;
@@ -12,4 +16,16 @@
         font-display: swap;
         src: url('/assets/fonts/DancingScript-VariableFont_wght.ttf') format('truetype');
     }
+}
+
+.reset-tw,
+.reset-tw * {
+  all: revert !important;
+}
+
+.reset-tw img {
+  width: 100% !important; 
+  height: auto !important;
+  display: block !important;
+  max-width: 100% !important; 
 }

@@ -13,6 +13,7 @@ module.exports = {
         dancing: ["Dancing", "cursive"]
       }
     },
-    plugins: [],
+    plugins: [
+    ],
   }
 }

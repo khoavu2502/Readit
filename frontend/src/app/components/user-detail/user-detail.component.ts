@@ -4,6 +4,7 @@ import { UserService } from '../../services/user.service';
 import { ActivatedRoute } from '@angular/router';
 import { firstValueFrom, forkJoin, throwError } from 'rxjs';
 import { Post } from '../../common/post';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-user-detail',
@@ -14,10 +15,11 @@ export class UserDetailComponent implements OnInit {
   user!: User| null;
   currentLoggedIn!: User | null;
   isFollowing!: boolean;
-  posts!: Post[];
+  posts!: any;
 
   constructor(private userService: UserService,
-              private route: ActivatedRoute) { }
+              private route: ActivatedRoute,
+              private sanitizer: DomSanitizer) { }
 
   ngOnInit(): void {
     this.route.paramMap.subscribe(() => {
@@ -52,6 +54,7 @@ export class UserDetailComponent implements OnInit {
   checkIfFollowing() {
     if (this.user && this.currentLoggedIn) {
       this.isFollowing = this.currentLoggedIn.following.includes(this.user.id);
+      console.log(this.isFollowing);
     } else {
       console.error();
     }
@@ -59,8 +62,9 @@ export class UserDetailComponent implements OnInit {
 
   loadPosts(userId: number) {
     this.userService.loadPosts(userId).subscribe(posts => {
-      this.posts = posts;
-      console.log(this.posts);
+      this.posts = posts.map(post => {
+        return { ...post, content: this.sanitizer.bypassSecurityTrustHtml(this.extractContentWithoutImages(post.content))}
+      })
     })
   }
 
@@ -82,5 +86,13 @@ export class UserDetailComponent implements OnInit {
   updateUsers(response: (User | null)[]) {
     this.userService.setCurrentUser(response[0]);
     this.user = response[1];
+  }
+
+  extractContentWithoutImages(html: string): string {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(html, 'text/html');
+    const imageTags = doc.querySelectorAll('img');
+    imageTags.forEach(img => img.remove());
+    return doc.body.innerHTML;
   }
 }

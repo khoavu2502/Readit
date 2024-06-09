@@ -6,6 +6,7 @@ import { PostDetailComponent } from './components/post-detail/post-detail.compon
 import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
+import { PostCreateComponent } from './components/post-create/post-create.component';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
@@ -14,6 +15,7 @@ const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: RegistrationComponent },
   { path: 'users/:id', component: UserDetailComponent },
+  { path: 'create-post', component: PostCreateComponent },
   {path: '**', redirectTo: '/posts', pathMatch: 'full'}
 ];
 
