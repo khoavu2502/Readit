@@ -38,6 +38,7 @@ export class RegistrationComponent implements OnInit {
     this.userService.clearCurrentUser();
 
     const userData = this.registrationFormGroup.get('user')?.value;
+    console.log(userData);
 
     this.securityService.performSignup(userData).subscribe({
       next: (data) => {

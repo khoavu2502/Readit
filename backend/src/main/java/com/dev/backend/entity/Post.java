@@ -38,6 +38,7 @@ public class Post {
     private String thumbnail;
 
     @NotBlank(message = "content cannot be empty")
+    @Size(max = 65535, message = "content length is {max} maximum characters")
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 

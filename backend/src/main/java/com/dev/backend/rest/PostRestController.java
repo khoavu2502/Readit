@@ -27,7 +27,7 @@ public class PostRestController {
 
     // POST request at /api/v1/posts
     @PostMapping("/posts")
-    public PostDto addPost(@Valid @RequestBody Post post) {
+    public PostDto addPost(@Valid @RequestBody PostDto post) {
         return postService.save(post);
     }
 

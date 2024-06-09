@@ -13,5 +13,5 @@ export class Post {
                 public publishedAt: Date,
                 public user: User,
                 public comments: Comment[],
-                public categories: Category[]) {}
+                public category: Category) {}
 }

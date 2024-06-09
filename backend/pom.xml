@@ -21,6 +21,8 @@
 		<security.version>3.2.4</security.version>
 		<jwt.version>0.12.5</jwt.version>
 		<hibernate.version>6.5.2.Final</hibernate.version>
+		<cloud.version>2.2.6.RELEASE</cloud.version>
+		<aws.version>1.12.667</aws.version>
 	</properties>
 	<dependencies>
 		<dependency>
@@ -80,6 +82,16 @@
 			<artifactId>jjwt-jackson</artifactId> <!-- or jjwt-gson if Gson is preferred -->
 			<version>${jwt.version}</version>
 			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-aws</artifactId>
+			<version>${cloud.version}</version>
+		</dependency>
+		<dependency>
+			<groupId>com.amazonaws</groupId>
+			<artifactId>aws-java-sdk-s3</artifactId>
+			<version>${aws.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

@@ -18,6 +18,9 @@ import { LoaderComponent } from './components/loader/loader.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
+import { PostCreateComponent } from './components/post-create/post-create.component';
+import { EditorModule } from '@tinymce/tinymce-angular';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 @NgModule({
   declarations: [
@@ -31,6 +34,7 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
     RegistrationComponent,
     LoaderComponent,
     UserDetailComponent,
+    PostCreateComponent,
   ],
   imports: [
     BrowserModule,
@@ -38,6 +42,7 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
     HttpClientModule,
     ReactiveFormsModule,
     BrowserAnimationsModule,
+    EditorModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-left',
@@ -48,7 +53,8 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
     }),
   ],
   providers: [
-    provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor]))
+    provideHttpClient(withInterceptors([authInterceptor, loaderInterceptor])),
+    provideAnimationsAsync()
   ],
   bootstrap: [AppComponent]
 })
