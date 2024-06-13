@@ -21,6 +21,7 @@ import { UserDetailComponent } from './components/user-detail/user-detail.compon
 import { PostCreateComponent } from './components/post-create/post-create.component';
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
+import { PickerModule } from '@ctrl/ngx-emoji-mart';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
     ReactiveFormsModule,
     BrowserAnimationsModule,
     EditorModule,
+    PickerModule,
     ToastrModule.forRoot({
       timeOut: 3000,
       positionClass: 'toast-top-left',

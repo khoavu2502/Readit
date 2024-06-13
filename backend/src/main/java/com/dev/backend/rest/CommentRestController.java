@@ -27,8 +27,8 @@ public class CommentRestController {
 
     // POST request at /api/v1/comments
     @PostMapping("/comments")
-    public CommentDto addComment(@Valid @RequestBody Comment comment) {
-        return commentService.save(comment);
+    public CommentDto addComment(@Valid @RequestBody CommentDto commentDto) {
+        return commentService.save(commentDto);
     }
 
     // GET request at /api/v1/comments/:id
