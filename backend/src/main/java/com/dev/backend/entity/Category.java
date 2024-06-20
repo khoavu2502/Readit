@@ -12,11 +12,14 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "category")
 public class Category {
 
@@ -31,7 +34,8 @@ public class Category {
     private String name;
 
     @OneToMany(mappedBy = "category",
-               cascade = CascadeType.ALL,
-               fetch = FetchType.EAGER)
+               cascade = { CascadeType.PERSIST,
+                           CascadeType.MERGE },
+               fetch = FetchType.LAZY)
     private List<Post> posts;
 }

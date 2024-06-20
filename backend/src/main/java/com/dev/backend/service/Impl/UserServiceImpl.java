@@ -7,10 +7,10 @@ import com.dev.backend.entity.User;
 import com.dev.backend.exception.ResourceNotFoundException;
 import com.dev.backend.repository.UserRepository;
 import com.dev.backend.service.UserService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;

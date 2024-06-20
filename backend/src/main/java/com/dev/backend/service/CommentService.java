@@ -1,7 +1,6 @@
 package com.dev.backend.service;
 
 import com.dev.backend.dto.CommentDto;
-import com.dev.backend.entity.Comment;
 
 import java.util.List;
 import java.util.Optional;

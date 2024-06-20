@@ -6,6 +6,8 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { CommentService } from '../../services/comment.service';
 import { ToastrService } from 'ngx-toastr';
+import { User } from '../../common/user';
+import { UserService } from '../../services/user.service';
 
 @Component({
   selector: 'app-post-detail',
@@ -17,15 +19,16 @@ export class PostDetailComponent implements OnInit {
   post!: Post;
   cleanContent!: SafeHtml;
   commentForm!: FormGroup;
-  isDisplay: boolean = false;
+  isEmojiPanelDisplay: boolean = false;
+  isMoreActionDisplay!: boolean[];
+  currentUser!: User | null;
 
   constructor(private postService: PostService,
               private route: ActivatedRoute,
               private sanitizer: DomSanitizer,
               private formBuilder: FormBuilder,
               private commentService: CommentService,
-              private toastr: ToastrService,
-              private navigate: Router) { }
+              private userService: UserService) { }
 
   ngOnInit(): void {
     this.commentForm = this.formBuilder.group({
@@ -37,6 +40,10 @@ export class PostDetailComponent implements OnInit {
     this.route.paramMap.subscribe(() => {
       this.handlePostDetails();
     })
+
+    this.userService.loadCurrentUser().subscribe((response => {
+      this.currentUser = response;
+    }))
   }
 
   handlePostDetails() {
@@ -44,6 +51,9 @@ export class PostDetailComponent implements OnInit {
   
     this.postService.getPost(postId).subscribe(response => {
       this.post = response;
+
+      this.isMoreActionDisplay = new Array(this.post.comments.length).fill(false);
+
       this.commentForm.patchValue({
         post: this.post
       })
@@ -74,8 +84,19 @@ export class PostDetailComponent implements OnInit {
     return currentUser ? JSON.parse(currentUser) : null;
   }
 
-  toggleDisplay() {
-    this.isDisplay = !this.isDisplay;
+  toggleDisplayEmoji() {
+    this.isEmojiPanelDisplay = !this.isEmojiPanelDisplay;
+  }
+
+  toggleMoreAction(index: number) {
+    console.log(index);
+    this.isMoreActionDisplay[index] = !this.isMoreActionDisplay[index];
+  }
+
+  deleteComment(id: number) {
+    this.commentService.deleteComment(id).subscribe(() => {
+      window.location.reload();
+    })
   }
 
   setErrors(errors: any) {

@@ -11,14 +11,15 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
-import lombok.Data;
-import lombok.ToString;
+import lombok.Getter;
+import lombok.Setter;
 import org.springframework.security.core.GrantedAuthority;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "role")
 public class Role implements GrantedAuthority {
 
@@ -33,9 +34,9 @@ public class Role implements GrantedAuthority {
     private String name;
 
     @ManyToMany(mappedBy = "roles",
-                cascade = CascadeType.REMOVE,
-                fetch = FetchType.EAGER)
-    @ToString.Exclude
+                cascade = { CascadeType.PERSIST,
+                            CascadeType.MERGE },
+                fetch = FetchType.LAZY)
     private List<User> users;
 
     @Override

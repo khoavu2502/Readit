@@ -12,7 +12,10 @@ export class CommentService {
   constructor(private httpClient: HttpClient) { }
 
   createComment(comment: any): Observable<any>{
-    console.log(comment);
     return this.httpClient.post<any>(this.baseUrl, comment);
+  }
+
+  deleteComment(id: number):Observable<any> {
+    return this.httpClient.delete<any>(`${this.baseUrl}/${id}`);
   }
 }

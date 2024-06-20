@@ -5,10 +5,10 @@ import com.dev.backend.entity.Post;
 import com.dev.backend.exception.ResourceNotFoundException;
 import com.dev.backend.repository.PostRepository;
 import com.dev.backend.service.PostService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

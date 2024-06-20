@@ -22,6 +22,8 @@ import { PostCreateComponent } from './components/post-create/post-create.compon
 import { EditorModule } from '@tinymce/tinymce-angular';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { PickerModule } from '@ctrl/ngx-emoji-mart';
+import { NotFoundComponent } from './components/error/not-found/not-found.component';
+import { AccessDeniedComponent } from './components/error/access-denied/access-denied.component';
 
 @NgModule({
   declarations: [
@@ -36,6 +38,8 @@ import { PickerModule } from '@ctrl/ngx-emoji-mart';
     LoaderComponent,
     UserDetailComponent,
     PostCreateComponent,
+    NotFoundComponent,
+    AccessDeniedComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,7 +1,6 @@
 package com.dev.backend.rest;
 
 import com.dev.backend.dto.CommentDto;
-import com.dev.backend.entity.Comment;
 import com.dev.backend.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,7 +20,7 @@ import java.util.Optional;
 @RequestMapping("/api/v1")
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
-public class CommentRestController {
+public class CommentController {
 
     private final CommentService commentService;
 
