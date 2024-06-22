@@ -1,0 +1,72 @@
+<!-- <p-toast position="top-right"></p-toast> -->
+<section class="lg:px-44 pt-14 min-h-screen flex flex-col">
+    <div class="relative mb-14">
+        <div class="absolute inset-y-0 start-0 ps-2 flex items-center">
+            <img src="/assets/images/plus_icon.png">
+        </div>
+        <a routerLink="/create-post" class="py-3 px-4 bg-black text-white rounded-md ps-9">Create post</a>
+    </div>
+    <div class="flex flex-row items-center justify-between mb-16">
+        <p class="font-extrabold text-lg">Following publications</p>
+        <a href="#" class="py-2 px-3 font-medium text-sm bg-gray-200 rounded-md hover:bg-gray-400">Read more</a>
+    </div>
+    <h2 class="font-extrabold text-lg mb-5">Featured</h2>
+    <!-- Featured post -->
+    <a *ngIf="posts[0] != null" routerLink="/posts/{{posts[0].id}}" class="p-3 flex flex-row items-center space-x-8 w-full border border-gray-300 rounded-md hover:bg-gray-100">
+        <img src="{{ posts[0].thumbnail }}" class="w-2/5">
+        <div class="flex flex-col space-y-3">
+            <p class="text-lg text-gray-500">
+                {{ posts[0].category.name }}
+            </p>
+            <p class="text-3xl font-bold line-clamp-3">
+                {{ posts[0].title }}
+            </p>
+            <p [innerHTML]="posts[0].content" class="line-clamp-4 mb-2"></p>
+            <div class="flex flex-row items-center space-x-3">
+                <img src=" {{ posts[0].user.avatar }} " class="w-12 h-12">
+                <div class="grid grid-cols-1 content-between">
+                    <p class="text-sm font-medium">
+                        By: {{ posts[0].user.username }}
+                    </p>
+                    <p class="text-sm text-gray-600">
+                        {{ posts[0].createdAt | date: 'dd/MM/yyyy' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </a>
+</section>
+<section class="lg:px-44 py-10">
+    <div class="flex flex-row items-center space-x-4 mb-3">
+        <h2 class="font-bold text-lg">New posts</h2>
+        <a href="#" class="px-3 py-2 rounded-md text-sm font-medium bg-gray-200 hover:bg-gray-400">Create post</a>
+    </div>
+    <div class="lg:grid lg:grid-cols-3 gap-6 w-full mb-10">
+        <a *ngFor="let post of posts" routerLink="/posts/{{ post.id }}" class="flex flex-col rounded-md shadow-md hover:bg-gray-100">
+            <img src="{{ post.thumbnail }}" class="mb-2 w-72 h-72"/>
+            <div class="p-2">
+                <p class="text-gray-500 text-sm mb-3">
+                    {{ post.category.name }}
+                </p>
+                <p class="line-clamp-1 font-extrabold text-lg mb-3">
+                    {{ post.title }}
+                </p>
+                <p [innerHTML]="post.content" class="line-clamp-3 mb-2"></p>
+                <div class="flex flex-row items-center space-x-3">
+                    <img src="{{ post.user.avatar }}" class="w-10 h-10 rounded-full">
+                    <div class="grid grid-cols-1 content-between">
+                        <p class="text-sm font-medium">
+                            By: {{ post.user.username }}
+                        </p>
+                        <p class="text-sm text-gray-600">
+                            {{ post.createdAt | date: 'dd/MM/yyyy' }}
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </a>
+    </div>
+    <div class="flex justify-center">
+        <a href="#" class="font-medium rounded-md p-3 bg-gray-200 hover:bg-gray-400">Load more</a>
+    </div>
+</section>

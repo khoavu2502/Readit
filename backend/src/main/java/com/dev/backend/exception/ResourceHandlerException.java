@@ -1,11 +1,14 @@
 package com.dev.backend.exception;
 
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.ControllerAdvice;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-@ControllerAdvice
+@RestControllerAdvice
+@Order(1)
 public class ResourceHandlerException {
 
     @ExceptionHandler
@@ -16,6 +19,16 @@ public class ResourceHandlerException {
         error.setErrorTime(System.currentTimeMillis());
 
         return new ResponseEntity<>(error, HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler
+    public ResponseEntity<ResourceErrorResponse> handleException(AccessDeniedException exc) {
+        ResourceErrorResponse error = new ResourceErrorResponse();
+        error.setStatus(HttpStatus.FORBIDDEN.value());
+        error.setMessage(exc.getMessage());
+        error.setErrorTime(System.currentTimeMillis());
+
+        return new ResponseEntity<>(error, HttpStatus.FORBIDDEN);
     }
 
     @ExceptionHandler

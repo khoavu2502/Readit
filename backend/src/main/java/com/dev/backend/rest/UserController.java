@@ -1,16 +1,15 @@
 package com.dev.backend.rest;
 
+import com.dev.backend.dto.PostDto;
 import com.dev.backend.dto.UserDto;
-import com.dev.backend.entity.User;
 import com.dev.backend.service.UserService;
-import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -21,15 +20,9 @@ import java.util.Optional;
 @RequestMapping("/api/v1")
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
-public class UserRestController {
+public class UserController {
 
     private final UserService userService;
-
-    // POST request at /api/v1/users
-    @PostMapping("/users")
-    public UserDto addUser(@Valid @RequestBody User user) {
-        return userService.save(user);
-    }
 
     // GET request at /api/v1/users/:id
     @GetMapping("/users/{id}")
@@ -41,6 +34,28 @@ public class UserRestController {
     @GetMapping("/users")
     public List<UserDto> getUsers() {
         return userService.findAll();
+    }
+
+    // POST request at /api/v1/users/:followerId/follow/:followingId
+    @PostMapping("/users/{followerId}/follow/{followingId}")
+    public ResponseEntity<?> follow(@PathVariable Long followerId,
+                                         @PathVariable Long followingId) {
+        List<UserDto> response = userService.followUser(followerId, followingId);
+        return ResponseEntity.ok(response);
+    }
+
+    // POST request at /api/v1/users/:followerId/follow/:followingId
+    @PostMapping("/users/{followerId}/unfollow/{followingId}")
+    public ResponseEntity<?> unFollow(@PathVariable Long followerId,
+                                           @PathVariable Long followingId) {
+        List<UserDto> response =  userService.unFollowUser(followerId, followingId);
+        return ResponseEntity.ok(response);
+    }
+
+    // GET request at /api/v1/users/:id/posts
+    @GetMapping("/users/{id}/posts")
+    public List<PostDto> getPosts(@PathVariable Long id) {
+        return userService.findPostById(id);
     }
 
     // DELETE request at /api/v1/users/:id

@@ -1,0 +1,61 @@
+<section class="lg:px-44 pt-14 pb-8 min-h-screen">
+    <form [formGroup]="postForm" (ngSubmit)="onSubmit(postForm.value)" class="flex flex-col space-y-5">
+        <div class="flex flex-col space-y-5">
+            <div class="flex flex-col space-y-2">
+                <label for="title" class="text-base font-bold">Title</label>
+                <input formControlName="title" type="text" name="title"
+                       class="px-3 py-2 rounded-md bg-gray-50 font-medium border border-gray-300 placeholder-gray-500 font-2xl"
+                       placeholder="Enter the title for post..."/>
+                <span *ngIf="postForm.get('title')?.errors?.['error']"
+                       class="text-sm text-red-500">
+                       {{ postForm.get('title')?.errors?.['error'] }}
+                </span>
+            </div>
+            <div class="flex flex-col space-y-2">
+                <div class="flex flex-col space-y-2 mb-6">
+                    <label for="category" class="text-base font-bold">Category</label>
+                    <p class="text-sm text-gray-500 font-medium">
+                        Please chose the most relevant category for your post
+                    </p>
+                </div>
+                <div class="flex flex-wrap space-x-auto">
+                    <div *ngFor="let category of categories;" class="flex flex-row items-center mb-4 mr-8">
+                        <input class="mr-2 h-5 w-5 cursor-pointer accent-black rounded-full border border-gray-900"
+                               type="radio" formControlName="category" [value]="category"/>
+                        <label class="text-gray-500 text-sm">{{ category.name }}</label>
+                    </div>
+                </div>
+                <span *ngIf="postForm.get('category')?.errors?.['error']"
+                        class="text-sm text-red-500">
+                        {{ postForm.get('category')?.errors?.['error'] }}
+                </span>
+            </div>
+            <div class="flex flex-col space-y-2">
+                <editor
+                    apiKey="et43czax986i81lasrgc28z6vkt5z6lb8fldyw9ojpkp9or5"
+                    [init]="editorConfig"
+                    formControlName="content">
+                </editor>
+                <span *ngIf="postForm.get('content')?.errors?.['error']"
+                            class="text-sm text-red-500">
+                            {{ postForm.get('content')?.errors?.['error'] }}
+                </span>
+            </div>
+        </div>
+        <div class="flex items-center space-x-4">
+            <div class="relative flex items-center">
+                <div class="absolute flex items-center inset-y-0 pe-3 end-0">
+                    <img src="/assets/images/send_icon.png" class="w-5 h-5 hover:cursor-pointer"/>
+                </div>
+                <button type="submit"
+                        class="flex items-center bg-gray-200 px-5 py-2 pe-9 w-full rounded-md hover:bg-gray-300">
+                        <span class="text-sm font-semibold">Create</span>
+                </button>
+            </div>
+            <a routerLink="/posts"
+            class="px-4 py-2 bg-gray-50 border border-gray-200 rounded-md hover:bg-gray-200">
+                <span class="text-sm font-semibold">Cancel</span>
+            </a>
+        </div>
+    </form>
+</section>

@@ -1,7 +1,6 @@
 package com.dev.backend.rest;
 
 import com.dev.backend.dto.PostDto;
-import com.dev.backend.entity.Post;
 import com.dev.backend.service.PostService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,13 +20,13 @@ import java.util.Optional;
 @RequestMapping("api/v1")
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
-public class PostRestController {
+public class PostController {
 
     private final PostService postService;
 
     // POST request at /api/v1/posts
     @PostMapping("/posts")
-    public PostDto addPost(@Valid @RequestBody Post post) {
+    public PostDto addPost(@Valid @RequestBody PostDto post) {
         return postService.save(post);
     }
 
@@ -44,7 +43,7 @@ public class PostRestController {
     }
 
     // DELETE request at /api/v1/posts
-    @DeleteMapping("/posts")
+    @DeleteMapping("/posts/{id}")
     public void deletePost(@PathVariable Long id) {
         postService.deleteById(id);
     }

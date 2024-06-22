@@ -5,15 +5,16 @@ import com.dev.backend.entity.Post;
 import com.dev.backend.exception.ResourceNotFoundException;
 import com.dev.backend.repository.PostRepository;
 import com.dev.backend.service.PostService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class PostServiceImpl implements PostService {
 
@@ -21,8 +22,8 @@ public class PostServiceImpl implements PostService {
     private final PostRepository postRepository;
 
     @Override
-    @Transactional
-    public PostDto save(Post post) {
+    public PostDto save(PostDto postDto) {
+        Post post = modelMapper.map(postDto, Post.class);
         return modelMapper.map(postRepository.save(post), PostDto.class);
     }
 
@@ -38,6 +39,7 @@ public class PostServiceImpl implements PostService {
 
     @Override
     public List<PostDto> findAll() {
+
         List<Post> posts = postRepository.findAll();
         return posts.stream()
                 .map(post -> modelMapper.map(post, PostDto.class))
@@ -45,7 +47,6 @@ public class PostServiceImpl implements PostService {
     }
 
     @Override
-    @Transactional
     public void deleteById(Long id) {
         Optional<Post> post = postRepository.findById(id);
         if (post.isPresent()) {

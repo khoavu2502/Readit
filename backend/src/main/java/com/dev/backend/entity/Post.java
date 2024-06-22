@@ -8,23 +8,23 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 import org.hibernate.annotations.CreationTimestamp;
-import org.hibernate.annotations.JdbcTypeCode;
 import org.hibernate.annotations.UpdateTimestamp;
-import org.hibernate.type.SqlTypes;
 
 import java.util.Date;
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "post")
 public class Post {
 
@@ -38,7 +38,12 @@ public class Post {
     @Size(max = 75, message = "{validation.name.size.too_long}")
     private String title;
 
+    @Column(name = "thumbnail")
+    @NotBlank(message = "thumbnail cannot be empty")
+    private String thumbnail;
+
     @NotBlank(message = "content cannot be empty")
+    @Size(max = 65535, message = "content length is {max} maximum characters")
     @Column(name = "content", columnDefinition = "TEXT")
     private String content;
 
@@ -56,15 +61,18 @@ public class Post {
     @Column(name = "published_at")
     private Date publishedAt;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id", nullable = false)
     private User user;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-                cascade = {CascadeType.DETACH, CascadeType.MERGE,
-                           CascadeType.PERSIST, CascadeType.REFRESH})
-    @JoinTable(name = "post_category",
-               joinColumns = @JoinColumn(name = "post_id"),
-               inverseJoinColumns = @JoinColumn(name = "category_id"))
-    private List<Category> categories;
+    @OneToMany(mappedBy = "post",
+               cascade = { CascadeType.PERSIST,
+                           CascadeType.MERGE,
+                           CascadeType.REMOVE },
+               fetch = FetchType.LAZY)
+    private List<Comment> comments;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "category_id", referencedColumnName = "id", nullable = false)
+    private Category category;
 }

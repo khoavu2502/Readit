@@ -9,7 +9,11 @@ module.exports = {
         '108': '28rem',
         '120': '32rem'
       },
+      fontFamily: {
+        dancing: ["Dancing", "cursive"]
+      }
     },
-    plugins: [],
+    plugins: [
+    ],
   }
 }

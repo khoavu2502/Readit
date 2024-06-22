@@ -7,18 +7,19 @@ import jakarta.persistence.FetchType;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.JoinTable;
-import jakarta.persistence.ManyToMany;
+import jakarta.persistence.OneToMany;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Size;
 import lombok.Data;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.List;
 
 @Entity
-@Data
+@Getter
+@Setter
 @Table(name = "category")
 public class Category {
 
@@ -32,11 +33,9 @@ public class Category {
     @Column(name = "name")
     private String name;
 
-    @ManyToMany(fetch = FetchType.LAZY,
-                cascade = {CascadeType.PERSIST, CascadeType.MERGE,
-                           CascadeType.DETACH, CascadeType.REFRESH})
-    @JoinTable(name = "post_category",
-               joinColumns = @JoinColumn(name = "category_id"),
-               inverseJoinColumns = @JoinColumn(name = "post_id"))
+    @OneToMany(mappedBy = "category",
+               cascade = { CascadeType.PERSIST,
+                           CascadeType.MERGE },
+               fetch = FetchType.LAZY)
     private List<Post> posts;
 }

@@ -1,7 +1,6 @@
 package com.dev.backend.rest;
 
 import com.dev.backend.dto.CommentDto;
-import com.dev.backend.entity.Comment;
 import com.dev.backend.service.CommentService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -21,14 +20,14 @@ import java.util.Optional;
 @RequestMapping("/api/v1")
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
-public class CommentRestController {
+public class CommentController {
 
     private final CommentService commentService;
 
     // POST request at /api/v1/comments
     @PostMapping("/comments")
-    public CommentDto addComment(@Valid @RequestBody Comment comment) {
-        return commentService.save(comment);
+    public CommentDto addComment(@Valid @RequestBody CommentDto commentDto) {
+        return commentService.save(commentDto);
     }
 
     // GET request at /api/v1/comments/:id
