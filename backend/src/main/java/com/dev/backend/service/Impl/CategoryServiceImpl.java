@@ -5,10 +5,10 @@ import com.dev.backend.entity.Category;
 import com.dev.backend.exception.ResourceNotFoundException;
 import com.dev.backend.repository.CategoryRepository;
 import com.dev.backend.service.CategoryService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;

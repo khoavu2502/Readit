@@ -7,15 +7,20 @@ import { LoginComponent } from './components/login/login.component';
 import { RegistrationComponent } from './components/registration/registration.component';
 import { UserDetailComponent } from './components/user-detail/user-detail.component';
 import { PostCreateComponent } from './components/post-create/post-create.component';
+import { AccessDeniedComponent } from './components/error/access-denied/access-denied.component';
+import { NotFoundComponent } from './components/error/not-found/not-found.component';
+import { authGuard } from './guards/auth.guard';
 
 const routes: Routes = [
   { path: '', component: LandingPageComponent },
   { path: 'posts', component: PostListComponent },
   { path: 'posts/:id', component: PostDetailComponent },
-  { path: 'login', component: LoginComponent },
-  { path: 'signup', component: RegistrationComponent },
+  { path: 'login', component: LoginComponent, canActivate: [authGuard] },
+  { path: 'signup', component: RegistrationComponent, canActivate: [authGuard] },
   { path: 'users/:id', component: UserDetailComponent },
   { path: 'create-post', component: PostCreateComponent },
+  { path: 'error/403', component: AccessDeniedComponent },
+  { path: 'error/404', component: NotFoundComponent },
   {path: '**', redirectTo: '/posts', pathMatch: 'full'}
 ];
 
@@ -26,3 +31,4 @@ const routes: Routes = [
   exports: [RouterModule]
 })
 export class AppRoutingModule { }
+

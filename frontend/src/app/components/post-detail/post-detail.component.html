@@ -44,8 +44,8 @@
             <div class="flex flex-row items-center justify-between rounded-b-md mb-3 px-3 py-2 border-l border-r border-b">
                 <button type="submit" class="px-3 py-2 text-sm font-medium rounded-md bg-gray-300 hover:bg-gray-400">Create comment</button>
                 <div class="relative">
-                    <img src="/assets/images/emoji.png" class="w-6 h-6 cursor-pointer" (click)="toggleDisplay()" />
-                    <div *ngIf="isDisplay" class="absolute top-0 right-0 translate-x-full -translate-y-full">
+                    <img src="/assets/images/emoji.png" class="w-6 h-6 cursor-pointer" (click)="toggleDisplayEmoji()" />
+                    <div *ngIf="isEmojiPanelDisplay" class="absolute top-0 right-0 translate-x-full -translate-y-full">
                         <emoji-mart (emojiClick)="addEmoji($event)"></emoji-mart>
                     </div>
                 </div>
@@ -55,12 +55,25 @@
                 {{ commentForm.get('content')?.errors?.['error'] }}
             </span>
         </form>
-        <div *ngFor="let comment of post.comments" class="flex flex-col space-y-3">
+        <div *ngFor="let comment of post.comments; let i = index" class="flex flex-col space-y-3">
             <div class="flex flex-row items-center space-x-2">
                 <img src="{{ comment.user.avatar }}" class="w-12 h-12 rounded-full"/>
                 <div class="flex flex-col justify-between">
                     <span class="text-sm text-gray-900">{{ comment.user.username }}</span>
                     <span class="text-sm text-gray-700">{{ comment.createdAt | date: 'hh:mm:ss a, dd/MM/yyyy'}}</span>
+                </div>
+                <div class="relative">
+                    <img src="/assets/images/more_icon.png" class="w-8 h-8 cursor-pointer" (click)="toggleMoreAction(i)" />
+                    <div *ngIf="isMoreActionDisplay[i]" class="absolute top-0 right-0 translate-x-full -translate-y-full flex flex-col space-y-3 whitespace-nowrap">
+                        <div class="flex flex-row items-center space-x-2">
+                            <img src="/assets/images/report_icon.png" class="w-6 h-6" />
+                            <span class="text-gray-600 text-sm hover:text-gray-900 hover:cursor-pointer">Report this comment</span>
+                        </div>
+                        <div *ngIf="comment.user.id === currentUser?.id" class="flex flex-row items-center space-x-2">
+                            <img src="/assets/images/delete_icon.png" class="w-6 h-6" />
+                            <span (click)="deleteComment(comment.id)" class="text-gray-600 text-sm hover:text-gray-900 hover:cursor-pointer">Delete comment</span>
+                        </div>
+                    </div>
                 </div>
             </div>
             <p class="text-sm text-gray-900 pb-4 text-pretty">

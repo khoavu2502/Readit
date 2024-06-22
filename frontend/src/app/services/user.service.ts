@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { User } from '../common/user';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, Observable, of } from 'rxjs';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { Post } from '../common/post';
@@ -24,12 +24,15 @@ export class UserService {
     localStorage.setItem('currentUser', JSON.stringify(user));
   }
 
-  loadCurrentUser() {
+  loadCurrentUser(): Observable<User | null> {
     const user = localStorage.getItem('currentUser');
     if (user) {
-      this.currentUserSubject.next(JSON.parse(user));
+      const userObj: User = JSON.parse(user);
+      this.currentUserSubject.next(userObj);
+      return of(userObj);
     } else {
       this.currentUserSubject.next(null);
+      return of(null);
     }
   }
 

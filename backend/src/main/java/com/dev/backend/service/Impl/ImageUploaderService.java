@@ -3,10 +3,10 @@ package com.dev.backend.service.Impl;
 import com.amazonaws.AmazonServiceException;
 import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.model.PutObjectRequest;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.File;
@@ -16,6 +16,7 @@ import java.io.IOException;
 import java.util.Objects;
 
 @Service
+@Transactional
 @RequiredArgsConstructor
 public class ImageUploaderService {
 
@@ -29,7 +30,6 @@ public class ImageUploaderService {
 
     private String fileName;
 
-    @Transactional
     public String uploadFile(final MultipartFile multipartFile) {
 
         File file = null;
@@ -58,7 +58,6 @@ public class ImageUploaderService {
         return file;
     }
 
-    @Transactional
     private String uploadFileToS3Bucket(final String bucketName, final File file) {
 
         final PutObjectRequest putObjectRequest = new PutObjectRequest(bucketName, file.getName(), file);

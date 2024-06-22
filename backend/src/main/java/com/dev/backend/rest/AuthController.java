@@ -22,7 +22,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/v1")
 @CrossOrigin(origins = "http://localhost:4200")
 @RequiredArgsConstructor
-public class AuthRestController {
+public class AuthController {
 
     private final AuthenticationService authenticationService;
     private final JwtService jwtService;

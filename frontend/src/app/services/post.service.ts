@@ -22,7 +22,6 @@ export class PostService {
   }
 
   createPost(postData: any): Observable<Post> {
-    console.log(postData);
 
     return this.httpClient.post<Post>(`${this.baseUrl}`, postData).pipe(
       catchError((err) => {

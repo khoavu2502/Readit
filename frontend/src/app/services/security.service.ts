@@ -55,11 +55,15 @@ export class SecurityService {
         this.route.navigate(['/posts']);
       },
 
-      error: () => {
-        console.log("Username or password incorrect");
+      error: (errors) => {
         this.isErrorSubject.next(true);
       }
     })
+  }
+
+  isLoggedIn():boolean {
+    const token = localStorage.getItem('jwtToken');
+    return !!token;
   }
 
   showSuccess() {

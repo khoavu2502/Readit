@@ -1,14 +1,16 @@
 package com.dev.backend.service.Impl;
 
 import com.dev.backend.dto.CommentDto;
+import com.dev.backend.dto.UserDto;
 import com.dev.backend.entity.Comment;
 import com.dev.backend.exception.ResourceNotFoundException;
 import com.dev.backend.repository.CommentRepository;
 import com.dev.backend.service.CommentService;
-import jakarta.transaction.Transactional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.security.access.AccessDeniedException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -20,6 +22,7 @@ public class CommentServiceImpl implements CommentService {
 
     private final ModelMapper modelMapper;
     private final CommentRepository commentRepository;
+    private final AuthenticationService authenticationService;
 
     @Override
     public CommentDto save(CommentDto commentDto) {
@@ -47,11 +50,18 @@ public class CommentServiceImpl implements CommentService {
 
     @Override
     public void deleteById(Long id) {
-        Optional<Comment> comment = commentRepository.findById(id);
-        if (comment.isPresent()) {
+        Optional<Comment> optionalComment = commentRepository.findById(id);
+        if (optionalComment.isPresent()) {
+            Long currentUserId = authenticationService.getCurrentUser().getId();
+            Long ownerId = optionalComment.get().getUser().getId();
+
+            if (!currentUserId.equals(ownerId)) {
+                throw new AccessDeniedException("Access Denied");
+            }
+
             commentRepository.deleteById(id);
         } else {
-            throw new ResourceNotFoundException("Cannot find user with id: " + id);
+            throw new ResourceNotFoundException("Cannot find comment with id: " + id);
         }
     }
 }

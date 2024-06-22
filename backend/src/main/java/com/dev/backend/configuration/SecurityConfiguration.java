@@ -3,11 +3,13 @@ package com.dev.backend.configuration;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.core.annotation.Order;
 import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
@@ -18,6 +20,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
@@ -44,8 +47,6 @@ public class SecurityConfiguration {
         http.authorizeHttpRequests(request -> {
            request.requestMatchers(HttpMethod.GET, "/api/v1/posts", "/api/v1/posts/*").permitAll();
            request.requestMatchers(HttpMethod.POST, "/api/v1/login", "/api/v1/register", "/error").permitAll();
-           request.requestMatchers(HttpMethod.DELETE, "/api/v1/**").hasAuthority("ADMIN");
-           request.requestMatchers(HttpMethod.POST, "/api/v1/**").hasAnyAuthority("USER", "ADMIN");
            request.anyRequest().authenticated();
         })
           .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class)
